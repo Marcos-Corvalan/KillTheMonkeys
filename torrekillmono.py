@@ -22,6 +22,11 @@ pilas.actores.Sonido()
 # Variables y Constantes
 monos = []
 tkillmono = None
+def monoHabla():    
+    frases = ["Ummm...Que rico!!","Gracias!!","BANANAS!"]
+    frase = frases[random.randrange(len(frases))]
+    return frase
+
 # Funciones
 def killmono(mono):
     global tkillmono
@@ -30,9 +35,10 @@ def killmono(mono):
 
 def mono_destruido(disparo, mono):
     global tkillmono
+    #global frase
     monos.remove(mono)
     mono.sonreir()
-    mono.decir('Gracias!!!')    
+    mono.decir(monoHabla())    
     pilas.utils.interpolar(mono, 'x', mono.x, 2)
     pilas.utils.interpolar(mono, 'y', mono.y, 2)
     tkillmono=pilas.tareas.agregar(.5, killmono, mono) 
@@ -106,6 +112,8 @@ tarea_crea_mono = pilas.tareas.agregar(1, crear_mono)
 pilas.colisiones.agregar(torreta, monos, muere_torreta)
 #pilas.mundo.agregar_tarea(1, crear_mono) <-- sintaxis vieja
 
-
+# Dar un aviso
+pilas.avisar("Usa el mouse para darle de comer a los monos")
+ 
 # Arrancar el juego
 pilas.ejecutar()
